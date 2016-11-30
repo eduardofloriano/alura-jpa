@@ -1,33 +1,39 @@
 package br.com.alura.financas.test;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import br.com.alura.financas.modelo.Conta;
+import br.com.alura.financas.util.JpaUtil;
 
 public class TesteJpa {
 
 	public static void main(String[] args) {
 
-		Conta conta = new Conta();
-		conta.setAgencia("Agencia Teste Um");
-		conta.setBanco("Banco Teste Um");
-		conta.setNumero("Numero Teste Um");
-		conta.setTitular("Titular Teste Um");
 		
+		EntityManager em = new JpaUtil().getEntityManager();
+		em.getTransaction().begin();
+
+		Conta conta = em.find(Conta.class, 550);
+		em.getTransaction().commit();
 		
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("financas-postgresql");
-		EntityManager em = emf.createEntityManager();
 		
 		em.getTransaction().begin();
-		
-		em.persist(conta);
-		
+		conta.setTitular("Mario Quintanas Filho");
+		em.merge(conta);
 		em.getTransaction().commit();
-		em.close();
 		
+		System.out.println(conta.getTitular());
+		em.close();
 
+	}
+
+	private static Conta createConta(String nome) {
+		Conta conta = new Conta();
+		conta.setTitular(nome);
+		conta.setBanco("Banco HSBC");
+		conta.setNumero("12345");
+		conta.setAgencia("123-4");
+		return conta;
 	}
 
 }

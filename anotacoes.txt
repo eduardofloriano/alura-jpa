@@ -1,0 +1,3 @@
+A transação começa com o Transaction.begin();
+Alterações de entidades managed só acontecem dentro de uma transação.
+Transaction.commit() fecha a transação e para de gerenciar as entidades.
