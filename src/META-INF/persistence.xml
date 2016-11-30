@@ -8,6 +8,7 @@
 		
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>		
 		<class>br.com.alura.financas.modelo.Conta</class>
+		<class>br.com.alura.financas.modelo.Movimentacao</class>
 		
 		<properties>			
 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
