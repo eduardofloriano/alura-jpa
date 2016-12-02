@@ -25,7 +25,7 @@ public class TesteJpa {
 		
 		em.getTransaction().commit();		
 		em.close();
-
+		
 	}
 
 	private static Conta createConta(String nome) {

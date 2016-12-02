@@ -1,9 +1,13 @@
 package br.com.alura.financas.modelo;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 @Entity
@@ -17,6 +21,9 @@ public class Conta {
 	private String banco;
 	private String agencia;
 	private String numero;
+		
+	@OneToMany(mappedBy="conta", fetch = FetchType.LAZY)
+	private List<Movimentacao> movimentacoes;
 	
 	public int getId() {
 		return id;
@@ -47,6 +54,12 @@ public class Conta {
 	}
 	public void setNumero(String numero) {
 		this.numero = numero;
+	}
+	public List<Movimentacao> getMovimentacoes() {
+		return movimentacoes;
+	}
+	public void setMovimentacoes(List<Movimentacao> movimentacoes) {
+		this.movimentacoes = movimentacoes;
 	}
 	
 	
