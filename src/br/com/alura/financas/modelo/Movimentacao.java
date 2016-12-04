@@ -10,11 +10,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import br.com.alura.financas.enums.TipoMovimentacaoEnum;
+
+@NamedQuery(name="obterMediaMovimentacoesPorConta",
+query="select avg(m.valor) from Movimentacao m where m.conta = :pConta and m.tipoMovimentacao = :pTipo")
+
 
 @Entity
 @SequenceGenerator(name="SEQ_MOVIMENTACAO", sequenceName="SEQ_MOVIMENTACAO", initialValue=1)

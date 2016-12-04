@@ -1,7 +1,10 @@
 package br.com.alura.financas.test;
 
 import java.math.BigDecimal;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.Calendar;
+import java.util.Locale;
 
 import javax.persistence.EntityManager;
 
@@ -12,37 +15,41 @@ import br.com.alura.financas.util.JpaUtil;
 
 public class TesteJpa {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 
 		
 		EntityManager em = new JpaUtil().getEntityManager();
 		em.getTransaction().begin();
 
-		Conta conta = em.find(Conta.class, 500);
-		Movimentacao movimentacao = createMovimentacao(conta, new BigDecimal("192.4"), TipoMovimentacaoEnum.ENTRADA);
+		Conta conta = em.find(Conta.class, 50);
+		Movimentacao movimentacao = createMovimentacao(conta, new BigDecimal("220.00"), TipoMovimentacaoEnum.SAIDA, "Imposto de Renda");
 		
 		em.persist(movimentacao);
 		
+//		Conta conta = createConta("Carem Souza Almeida", "Bradesco");
+//		em.persist(conta);
+		
+		
 		em.getTransaction().commit();		
 		em.close();
-		
+		System.exit(0);
 	}
 
-	private static Conta createConta(String nome) {
+	private static Conta createConta(String titular, String banco ){
 		Conta conta = new Conta();
-		conta.setTitular(nome);
-		conta.setBanco("Banco HSBC");
+		conta.setTitular(titular);
+		conta.setBanco(banco);
 		conta.setNumero("12345");
 		conta.setAgencia("123-4");
 		return conta;
 	}
 	
-	private static Movimentacao createMovimentacao(Conta conta, BigDecimal valor, TipoMovimentacaoEnum tipoMovimentacao){
+	private static Movimentacao createMovimentacao(Conta conta, BigDecimal valor, TipoMovimentacaoEnum tipoMovimentacao, String descricao){
 		Movimentacao movimentacao = new Movimentacao();
 		
 		movimentacao.setConta(conta);
 		movimentacao.setData(Calendar.getInstance());
-		movimentacao.setDescricao("Nova Movimentacao");
+		movimentacao.setDescricao(descricao);
 		movimentacao.setTipoMovimentacao(tipoMovimentacao);
 		movimentacao.setValor(valor);
 		
